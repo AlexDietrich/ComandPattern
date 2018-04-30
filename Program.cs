@@ -1,4 +1,5 @@
 ﻿using System;
+using ComandPattern.Commands;
 
 namespace ComandPattern
 {
@@ -10,35 +11,13 @@ namespace ComandPattern
             var name = Console.ReadLine();
             string command;
             var game = new Game(name);
+            var commandController = new CommandController();
+            commandController.InitializeGame(game);
             Console.Write("Gib ein Kommando für " + name + " ein: ");
 
             while ((command = Console.ReadLine()) != "exit")
             {
-                switch (command)
-                {
-                    case "installieren":
-                        game.InstallGame();
-                        break;
-                    case "herunterladen":
-                        game.DownloadGame();
-                        break;
-                    case "aktualisieren":
-                        game.UpdateGame();
-                        break;
-                    case "starten":
-                        game.StartGame();
-                        break;
-                    case "verleihen":
-                        Console.Write("Gib den User ein, dem du das Spiel leihen möchtest: ");
-                        game.ShareGame(Console.ReadLine());
-                        break;
-                    case "deinstallieren":
-                        game.UnInstallGame();
-                        break;
-                    case "kaufen":
-                        game.BuyGame();
-                        break;
-                }
+                commandController.ExecuteCommand(command);
                 Console.Write("Gib ein Kommando für " + name + " ein: ");
             }
         }
